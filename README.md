@@ -1,6 +1,29 @@
 # visualizer-cli
 
-A lightweight CLI for Siemens Questa Visualizer. All inputs are on the command line, all output is JSON, making it easy to consume by an LLM. A CLI consumes less token than an mcp server ([Visualizer MCP server](https://github.com/htminuslab/visualizer-mcp)) and is easier to understand and build. The CLI itself is written in good old C. 
+A lightweight CLI for Siemens Questa Visualizer. All inputs are on the command line, all outputs are JSON, making it easy to consume by an LLM. A CLI consumes less token than an MCP server ([Visualizer MCP server](https://github.com/htminuslab/visualizer-mcp)) and is easier to understand and build. 
+
+The CLI itself is written in good old C, you will end up with a single exe/binary which you can use in a skill.
+
+The CLI is only limited by the Tcl commands unported by Visualizer. There are few Tcl commands that would be really useful such as exporting schematics and quickly searching for a signal value, hopefully they will be added in the future.
+
+## How does it work
+
+When you start Visualizer it open up a port(socket) which allows an LLM (or user) to issue transcript commands remotely. 
+
+To use it start visualizer with the -vccport argument, for example:
+
+```
+visualizer -vccport 5678 -do run.do
+```
+
+Next set an environmental variable using the same port:
+
+```
+set VCC_CLI_INFO=5678
+```
+
+When you now run LM Studio/VSCode etc `visualizer-cli` read the environmental variable to find out which port to use. If you ask the LLM to add some signals to the waveform window it reads a skill file and then issues the appropriate commands via the `visualizer-cli` command line. The responds back is in json which is easy for the LLM to process.
+
 
 ## Prerequisites
 
@@ -80,7 +103,9 @@ Every command prints a single JSON object to stdout:
 
 ## Creating a skill
 
-A [Claude Code skill](https://docs.anthropic.com/en/docs/claude-code/skills) teaches Claude when and how to use this CLI. Create the file `.claude/skills/visualizer.md` in your project (or globally at `~/.claude/skills/visualizer.md`):
+A skill teaches an LLM on how to use the CLI. For this example I am using a [Claude Code skill](https://docs.anthropic.com/en/docs/claude-code/skills).
+
+Create the file `.claude/skills/visualizer.md` in your project (or globally at `~/.claude/skills/visualizer.md`):
 
 ```markdown
 ---
