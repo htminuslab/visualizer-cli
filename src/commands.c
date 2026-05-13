@@ -170,7 +170,7 @@ int cmd_step(VCCConn *conn, int argc, char **argv)
 
 int cmd_run_status(VCCConn *conn)
 {
-    return exec_and_print(conn, "simstatus");
+    return exec_and_print(conn, "runStatus");
 }
 
 /* ---- get_time ---- */

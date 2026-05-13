@@ -22,7 +22,15 @@ Next set an environmental variable using the same port:
 set VCC_CLI_INFO=5678
 ```
 
-When you now run LM Studio/VSCode etc `visualizer-cli` read the environmental variable to find out which port to use. If you ask the LLM to add some signals to the waveform window it reads a skill file and then issues the appropriate commands via the `visualizer-cli` command line. The responds back is in json which is easy for the LLM to process.
+When you now run LM Studio/VSCode/CMD/Terminal etc `visualizer-cli` read the environmental variable to find out which port to use. If you ask the LLM to add some signals to the waveform window it reads a skill file and then issues the appropriate commands via the `visualizer-cli` command line. The responds back is in json which is easy for the LLM to process.
+
+
+<p align="center">
+  <img src="visualizer-cli.png"/>
+</p>
+<p align="center">
+Figure: Testing the CLI in a Windows CMD prompt
+</p>
 
 
 ## Prerequisites
